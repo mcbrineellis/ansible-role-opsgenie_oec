@@ -1,0 +1,6 @@
+---
+- name: Restart OEC
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: "{{ oec_svc_name }}"

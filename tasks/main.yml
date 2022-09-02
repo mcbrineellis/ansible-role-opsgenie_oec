@@ -1,0 +1,42 @@
+---
+# Setup/install tasks.
+- name: Install OEC package
+  apt:
+    deb: "https://github.com/opsgenie/oec-scripts/releases/download/Zabbix-1.1.6_oec-1.1.3/opsgenie-zabbix_1.1.6_amd64.deb"
+
+
+- name: Update OEC configuration
+  template:
+    src: config.json.j2
+    dest: /var/whatever
+    owner: who?
+    group: who?
+    mode: 0000
+  notify:
+    - restart oec
+
+- name: copy oec service file in place
+  template:
+    src: "{{ oec_svc_template }}"
+    dest: "{{ oec_svc_path }}{{ oec_svc_name }}.service"
+    owner: root
+    group: root
+    mode: 0755
+  notify:
+    - restart oec
+
+- name: Copy oec configuration in place.
+  template:
+    src: "{{ oec_conf_template }}"
+    dest: "{{ oec_conf_file_path }}{{ oec_conf_file }}"
+    owner: "{{ oec_user }}"
+    group: "{{ oec_group }}"
+    mode: 0644
+  notify:
+    - restart oec
+
+- name: Ensure oec is started and enabled to start at boot.
+  service:
+    name: "{{ oec_svc_name }}"
+    state: started
+    enabled: yes
