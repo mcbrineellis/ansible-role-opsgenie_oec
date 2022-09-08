@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  role_name: oec
-  author: Connor McBrine-Ellis
+  role_name: opsgenie-oec
+  author: mcbrineellis
   description: Ansible role to install Opsgenie Edge Connector
   license: MIT
   min_ansible_version: "2.4"
